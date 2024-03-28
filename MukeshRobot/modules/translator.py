@@ -80,7 +80,7 @@ from telethon import __version__ as s
 from MukeshRobot import OWNER_ID, dispatcher
 from MukeshRobot import pbot as client
 
-Mukesh = "https://telegra.ph/file/d9bddd89a8070632de73e.jpg"
+Mukesh = "https://telegra.ph/file/569e139ffae267ff791f7.jpg"
 
 
 @client.on_message(filters.command(["repo", "source"]))
@@ -93,10 +93,10 @@ async def repo(client, message):
             [
                 [
                     InlineKeyboardButton(
-                        "ᴏᴡɴᴇʀ",user_id=OWNER_ID
+                        "• ᴏᴡɴᴇʀ •",user_id=OWNER_ID
                     ),
                     InlineKeyboardButton(
-                        "ʀᴇᴘᴏ",
+                        "• ʀᴇᴘᴏ •",
                         callback_data="gib_source",
                     ),
                 ]
