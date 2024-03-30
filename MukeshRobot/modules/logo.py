@@ -479,12 +479,13 @@ async def lego(event):
         await telethn.send_file(
             event.chat_id,
             file=fname,
-            caption=f"""━━━━━━━{BOT_NAME}━━━━━━━
+            caption=f"""━━{BOT_NAME}━━
 
 ᰔᩚ ʟᴏɢᴏ ᴄʀᴇᴀᴛᴇᴅ ꜱᴜᴄᴄᴇꜱꜱꜰᴜʟʟʏ ᰔᩚ
 
-✦ ᴄʀᴇᴀᴛᴇᴅ ʙʏ ➛ [˹ 𝗦𝙴𝙽𝙾𝚁𝙸𝚃𝙰 ✘ 𝗥𝙾𝙱𝙾 ˼​](https://t.me/StrangerSuperbot)
-━━━━━━━{BOT_NAME}━━━━━━━""",buttons=button_row
+   ✦ ᴄʀᴇᴀᴛᴇᴅ ʙʏ ➛ [●‌● 𝐒αρиα ‌●‌●](https://t.me/SAPNA_ROBOT)
+
+━━{BOT_NAME}━━""",buttons=button_row
 )
         await pesan.delete()
         if os.path.exists(fname):
