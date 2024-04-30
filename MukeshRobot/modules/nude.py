@@ -1,10 +1,26 @@
-from pyrogram import Client, filters , enums
 import requests
+from pyrogram import filters
+from pyrogram.types import Message,InlineKeyboardButton,InlineKeyboardMarkup
+from pyrogram.enums import *
+from MukeshRobot import pbot as app
 
 
-@Client.on_message(filters.command("nude"))
+@app.on_message(filters.command("nude"))
 async def nudes(_,message):
-    if message.chat.type != enums.ChatType.PRIVATE:
-        return await message.reply_text("**This Command Is Only Usable In PM for Group Protection.**")
-    x = requests.get('https://api.night-api.com/images/nsfw',headers={"authorization": "pUieNWJRIs-2Q073qw9dddUcM3Vncmn-eusGidDCIw"})
-    await message.reply_photo(x.json()["content"]["url"])
+    if message.chat.type != ChatType.PRIVATE:
+        return await message.reply_text("❍ ᴛʜɪs ᴄᴏᴍᴍᴀɴᴅ ɪs ᴏɴʟʏ ᴜsᴀʙʟᴇ ɪɴ ᴘᴍ ғᴏʀ ɢʀᴏᴜᴘ ᴘʀᴏᴛᴇᴄᴛɪᴏɴ.",
+         reply_markup=InlineKeyboardMarkup(
+            [
+                [InlineKeyboardButton("• ɢᴏ ᴘᴍ •", url=f"https://t.me/{app.me.username}?start=True")]
+                [InlineKeyboardButton("• sᴜᴘᴘᴏʀᴛ •", url=f"https://t.me/+_Bn9pPn9azVhMDg1")]
+            ]
+        ))
+    x = requests.get('https://api.night-api.com/images/nsfw',headers={"authorization": "pUieNWJRIs-2Q073qw9dddUcM3Vncmn-eusGidDCIw"})
+    await message.reply_photo(x.json()["content"]["url"])
+
+
+mod_name = "ɴᴜᴅᴇ"
+
+help = """
+❍ /nude ➛ ʀᴀɴᴅᴏᴍ ɴᴜᴅᴇ ɪᴍᴀɢᴇs (ᴡᴏʀᴋ ᴏɴʟʏ ʙᴏᴛ ᴘᴍ , ғᴏʀ ɢʀᴏᴜᴘ ᴘʀᴏᴛᴇᴄᴛɪᴏɴ).
+"""
