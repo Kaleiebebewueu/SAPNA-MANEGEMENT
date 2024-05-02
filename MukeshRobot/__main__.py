@@ -91,7 +91,7 @@ buttons = [
     ],
     [
         InlineKeyboardButton(text="• ᴜᴘᴅᴀᴛᴇ •", url=f"https://t.me/ALL_SANATANI_BOT"),
-        InlineKeyboardButton(text="• ꜱᴜᴘᴘᴏʀᴛ •", url=f"https://t.me/{SUPPORT_CHAT}"),
+        InlineKeyboardButton(text="• ꜱᴜᴘᴘᴏʀᴛ •", url=f"https://t.me/+_Bn9pPn9azVhMDg1"),
     ],
     [
         InlineKeyboardButton(text="• ʜᴇʟᴘ ᴀɴᴅ ᴄᴏᴍᴍᴀɴᴅs •", callback_data="Main_help"),
@@ -103,7 +103,7 @@ buttons = [
 roy = [
     [
         InlineKeyboardButton(text="• ᴜᴘᴅᴀᴛᴇ •", url=f"https://t.me/ALL_SANATANI_BOT"),
-        InlineKeyboardButton(text="• ꜱᴜᴘᴘᴏʀᴛ •", url=f"https://t.me/{SUPPORT_CHAT}"),
+        InlineKeyboardButton(text="• ꜱᴜᴘᴘᴏʀᴛ •", url=f"https://t.me/+_Bn9pPn9azVhMDg1"),
     ],
     [
         InlineKeyboardButton(
@@ -429,7 +429,7 @@ def Mukesh_about_callback(update: Update, context: CallbackContext):
                 [
                     [
                         InlineKeyboardButton(
-                            text="• ꜱᴜᴘᴘᴏʀᴛ •", url=f"https://t.me/{SUPPORT_CHAT}"
+                            text="• ꜱᴜᴘᴘᴏʀᴛ •", url=f"https://t.me/+_Bn9pPn9azVhMDg1"
                         ),
                         InlineKeyboardButton(
                             text="• ᴜᴘᴅᴀᴛᴇ •", url=f"https://t.me/ALL_SANATANI_BOT"
