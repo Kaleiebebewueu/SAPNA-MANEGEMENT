@@ -33,10 +33,10 @@ PHOTO = "https://telegra.ph/file/1b57ea5abf2f600370b01.mp4"
 
 @register(pattern=("Good morning"))
 async def awake(event):
-    NEKO  = f"❀ ᴡɪsʜɪɴɢ ʏᴏᴜ ɢᴏᴏᴅ ᴍᴏʀɴɪɴɢ ❀\n\n✦ ᴡᴇʟᴄᴏᴍᴇ ᴛʜɪs ʙᴇᴀᴜᴛɪғᴜʟ \n     ᴍᴏʀɴɪɴɢ ᴡɪᴛʜ ᴀ sᴍɪʟᴇ ᴏɴ \n     ʏᴏᴜʀ ғᴀᴄᴇ I ʜᴏᴘᴇ ʏᴏᴜ ʟʟ \n     ʜᴀᴠᴇ ᴀ ɢʀᴇᴀᴛ ᴅᴀʏ ᴛᴏᴅᴀʏ \n\n✦ ᴡɪsʜɪɴɢ ᴛᴏ ➛ {event.sender.first_name}\n\n✦ ᴘᴏᴡᴇʀᴇᴅ ʙʏ ➛ [ ‌●‌● 𝐒αρиα ‌●‌●](https://t.me/SAPNA_ROBOT)"
+    NEKO  = f"❀ ᴡɪsʜɪɴɢ ʏᴏᴜ ɢᴏᴏᴅ ᴍᴏʀɴɪɴɢ ❀\n\n✦ ᴡᴇʟᴄᴏᴍᴇ ᴛʜɪs ʙᴇᴀᴜᴛɪғᴜʟ \n     ᴍᴏʀɴɪɴɢ ᴡɪᴛʜ ᴀ sᴍɪʟᴇ ᴏɴ \n     ʏᴏᴜʀ ғᴀᴄᴇ I ʜᴏᴘᴇ ʏᴏᴜ ʟʟ \n     ʜᴀᴠᴇ ᴀ ɢʀᴇᴀᴛ ᴅᴀʏ ᴛᴏᴅᴀʏ \n\n✦ ᴡɪsʜɪɴɢ ᴛᴏ ➛ {event.sender.first_name}\n\n✦ ᴘᴏᴡᴇʀᴇᴅ ʙʏ ➛ [ ‌●‌● 𝐒αρиα ‌●‌●](https://t.me/SAPNA_x_ROBOT)"
     BUTTON = [
         [
-            Button.url("• ᴍᴇᴇᴛ ᴍᴇ ʜᴇʀᴇ ʙᴀʙʏ •", "https://telegram.dog/Il_4ST_FIGHTER_lI"),
+            Button.url("• ᴍᴇᴇᴛ ᴍᴇ ʜᴇʀᴇ ʙᴀʙʏ •", "https://t.me/+_Bn9pPn9azVhMDg1"),
         ],
 		[
             Button.url("• ᴀᴅᴅ ᴍᴇ ʙᴀʙʏ •", "https://telegram.dog/SAPNA_x_ROBOT"),
