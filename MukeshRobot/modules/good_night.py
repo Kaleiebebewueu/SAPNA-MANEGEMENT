@@ -33,7 +33,7 @@ PHOTO = "https://telegra.ph/file/bab1dd575cce3f96219c8.mp4"
 
 @register(pattern=("Good night"))
 async def awake(event):
-    NEKO  = f"❖ ᴡɪsʜɪɴɢ ʏᴏᴜ ᴠᴇʀʏ ɢᴏᴏᴅ ɴɪɢʜᴛ ❖/n/n● ᴍᴀʏ ᴛʜᴇ ᴀɴɢᴇʟs ғʀᴏᴍ ʜᴇᴀᴠᴇɴ/n   ʙʀɪɴɢ ᴛʜᴇ sᴡᴇᴇᴛᴇsᴛ ᴏғ ᴀʟʟ /n   ᴅʀᴇᴀᴍs ғᴏʀ ʏᴏᴜ. ᴍᴀʏ ʏᴏᴜ /n   ʜᴀᴠᴇ ʟᴏɴɢ ᴀɴᴅ ʙʟɪssғᴜʟ /n   sʟᴇᴇᴘ ғᴜʟʟ ᴏғ ʜᴀᴘᴘʏ ᴅʀᴇᴀᴍs/n/n❖ ᴘᴏᴡᴇʀᴇᴅ ʙʏ ➛ [ ‌●‌● 𝐒αρиα ‌●‌●](https://t.me/SAPNA_X_ROBOT)"
+    NEKO  = f"❖ ᴡɪsʜɪɴɢ ʏᴏᴜ ᴠᴇʀʏ ɢᴏᴏᴅ ɴɪɢʜᴛ ❖\n\n● ᴍᴀʏ ᴛʜᴇ ᴀɴɢᴇʟs ғʀᴏᴍ ʜᴇᴀᴠᴇɴ\nʙʀɪɴɢ ᴛʜᴇ sᴡᴇᴇᴛᴇsᴛ ᴏғ ᴀʟʟ \nᴅʀᴇᴀᴍs ғᴏʀ ʏᴏᴜ. ᴍᴀʏ ʏᴏᴜ \nʜᴀᴠᴇ ʟᴏɴɢ ᴀɴᴅ ʙʟɪssғᴜʟ \nsʟᴇᴇᴘ ғᴜʟʟ ᴏғ ʜᴀᴘᴘʏ ᴅʀᴇᴀᴍs\n\n❖ ᴘᴏᴡᴇʀᴇᴅ ʙʏ ➛ [ ‌●‌● 𝐒αρиα ‌●‌●](https://t.me/SAPNA_X_ROBOT)"
     BUTTON = [
         [
             Button.url("• ᴍᴇᴇᴛ ᴍᴇ ʜᴇʀᴇ ʙᴀʙʏ •", "https://t.me/+_Bn9pPn9azVhMDg1"),
