@@ -25,7 +25,7 @@ async def get_link_group(client, message):
             await text.edit_text("❍ ᴜᴘʟᴏᴀᴅɪɴɢ ᴛᴏ ᴛᴇʟᴇɢʀᴀᴘʜ...")
             upload_path = upload_file(local_path)
             await text.edit_text(
-                f"❖ | [ᴛᴇʟᴇɢʀᴀᴘʜ ʟɪɴᴋ](https://telegra.ph{upload_path[0]}) ❖",
+                f"❖ | [ᴛᴇʟᴇɢʀᴀᴘʜ ʟɪɴᴋ](https://telegra.ph{upload_path[0]}) | ❖",
                 reply_markup=InlineKeyboardMarkup(
                     [
                         [
