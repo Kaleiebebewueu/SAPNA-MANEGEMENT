@@ -1,275 +1,49 @@
-"""
-BSD 2-Clause License
+from ... import *
+from pyrogram import *
+from pyrogram.types import *
+from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
+from MukeshRobot import pbot
 
-Copyright (C) 2017-2019, Paul Larsen
-Copyright (C) 2021-2022, Awesome-RJ, [ https://github.com/Awesome-RJ ]
-Copyright (c) 2021-2022, Yūki • Black Knights Union, [ https://github.com/Awesome-RJ/CutiepiiRobot ]
-
-All rights reserved.
-
-Redistribution and use in source and binary forms, with or without
-modification, are permitted provided that the following conditions are met:
-
-1. Redistributions of source code must retain the above copyright notice, this
-   list of conditions and the following disclaimer.
-
-2. Redistributions in binary form must reproduce the above copyright notice,
-   this list of conditions and the following disclaimer in the documentation
-   and/or other materials provided with the distribution.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
-FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
-DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
-SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
-OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-"""
-
-import asyncio
-import datetime
-
-from telethon.tl import functions, types
-from MukeshRobot.events import register
-from MukeshRobot import telethn
+SACHIN = [
+    [
+        InlineKeyboardButton(text="ᴀᴅᴅ ᴍᴇ ʙᴀʙʏ", url=f"https://t.me/HIMANSHI_MUSIC_BOT?startgroup=true"),
+    ],
+]
 
 
-async def is_register_admin(chat, user):
-    if isinstance(chat, (types.InputPeerChannel, types.InputChannel)):
-        return isinstance(
-            (await
-             telethn(functions.channels.GetParticipantRequest(chat, user)
-                     )).participant,
-            (types.ChannelParticipantAdmin, types.ChannelParticipantCreator),
+@pbot.on_message(filters.command(["bin", "ccbin", "bininfo"], [".", "!", "/"]))
+async def check_ccbin(client, message):
+    if len(message.command) < 2:
+        return await message.reply_text(
+            "✦ <b>ᴘʟᴇᴀsᴇ ɢɪᴠᴇ ᴍᴇ ᴀ ʙɪɴ ᴛᴏ\n✦ ɢᴇᴛ ʙɪɴ ᴅᴇᴛᴀɪʟs !</b>"
         )
-    if isinstance(chat, types.InputPeerUser):
-        return True
+    try:
+        await message.delete()
+    except:
+        pass
+    aux = await message.reply_text("❄️")
+    bin = message.text.split(None, 1)[1]
+    if len(bin) < 6:
+        return await aux.edit("✨")
+    try:
+        resp = await api.bininfo(bin)
+        await aux.edit(f"""
+<b>┬── ⋅ ⋅ ───── ᯽ ───── ⋅ ⋅ ──┬</b>
+<b>            ❖ ʙɪɴ ғᴜʟʟ ᴅᴇᴛᴀɪʟs ❖</b>
+<b>┴── ⋅ ⋅ ───── ᯽ ───── ⋅ ⋅ ──┴</b>
 
+<b>๏ ʙᴀɴᴋ ➠</b> <tt>{resp.bank}</tt>
+<b>๏ ʙɪɴ ➠</b> <tt>{resp.bin}</tt>
+<b>๏ ᴄᴏᴜɴᴛʀʏ ➠</b> <tt>{resp.country}</tt>
+<b>๏ ғʟᴀɢ ➠</b> <tt>{resp.flag}</tt>
+<b>๏ ɪsᴏ ➠</b> <tt>{resp.iso}</tt>
+<b>๏ ʟᴇᴠᴇʟ ➠</b> <tt>{resp.level}</tt>
+<b>๏ ᴘʀᴇᴘᴀɪᴅ ➠</b> <tt>{resp.prepaid}</tt>
+<b>๏ ᴛʏᴘᴇ ➠</b> <tt>{resp.type}</tt>
+<b>๏ ᴠᴇɴᴅᴏʀ ➠</b> <tt>{resp.vendor}</tt>
 
-@register(pattern="^/gen (.*)")
-async def alive(event):
-    if event.is_group and not await is_register_admin(event.input_chat,
-                                                      event.message.sender_id):
-        return
-    sender = await event.get_sender()
-    fname = sender.first_name
-    m = await event.reply("Generating CC...Pls Weit.")
-    ok = event.pattern_match.group(1)
-    async with ubot.conversation("@ccgen_robot") as bot_conv:
-        await bot_conv.send_message("/generate")
-        await bot_conv.send_message("💳Credit Card Generator💳")
-        await asyncio.sleep(2)
-        await bot_conv.send_message(ok)
-        await asyncio.sleep(1)
-        response = await bot_conv.get_response()
-        await asyncio.sleep(1)
-        await response.click(text="✅Generate✅")
-        await asyncio.sleep(2)
-        text = "****Generated Cards:****\n"
-        gen = await bot_conv.get_response()
-        card = gen.text
-        text = f"{card.splitlines()[0]}\n"
-        text += f"{card.splitlines()[1]}\n"
-        text += f"{card.splitlines()[2]}\n"
-        text += f"{card.splitlines()[3]}\n"
-        text += f"{card.splitlines()[4]}\n"
-        text += f"{card.splitlines()[5]}\n"
-        text += f"\nGenerated By: **{fname}**"
-        await m.edit(text)
-
-
-@register(pattern="^/key (.*)")
-async def alive(event):
-    if event.is_group and not await is_register_admin(event.input_chat,
-                                                      event.message.sender_id):
-        return
-    sender = await event.get_sender()
-    fname = sender.first_name
-    ok = event.pattern_match.group(1)
-    k = await event.reply("**Wait for Result.**")
-    start_time = datetime.datetime.now()
-    async with ubot.conversation("@Carol5_bot") as bot_conv:
-        await bot_conv.send_message(f"/key {ok}")
-        await asyncio.sleep(6)
-        response = await bot_conv.get_response()
-        await event.delete()
-        end_time = datetime.datetime.now()
-        pingtime = end_time - start_time
-        time = f"{str(round(pingtime.total_seconds(), 2))}s"
-        if "Invalid" in response.text:
-            reply = f"SK Key : {ok}\n"
-            reply += "Result: Invalid API Key\n"
-            reply += "RESPONSE: ❌Invalid Key❌\n"
-            reply += f"Time: {time}\n"
-            reply += f"Checked By **{fname}**"
-        elif "Test" in response.text:
-            reply = ("SK Key : sk_live_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n" +
-                     "Result: Test mode Key\n")
-
-            reply += "RESPONSE: ❌Test Mode Key❌\n"
-            reply += f"Time: {time}\n"
-            reply += f"Checked By **{fname}**"
-        elif "Valid" in response.text:
-            reply = "SK Key : sk_live_xxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n" + "Result: LIVE\n"
-            reply += "RESPONSE: ✅Valid Key\n"
-            reply += f"Time: {time}\n"
-            reply += f"Checked By **{fname}**"
-        else:
-            reply = "Error, Report @LunaBotSupport"
-        await k.edit(reply)
-
-
-@register(pattern="^/ss (.*)")
-async def alive(event):
-    if event.is_group and not await is_register_admin(event.input_chat,
-                                                      event.message.sender_id):
-        return
-    sender = await event.get_sender()
-    fname = sender.first_name
-    ok = event.pattern_match.group(1)
-    k = await event.reply("**Wait for Result.**")
-    async with ubot.conversation("@Carol5_bot") as bot_conv:
-        await bot_conv.send_message(f"/ss {ok}")
-        await asyncio.sleep(9)
-        response = await bot_conv.get_response()
-        if "Try again after" in response.text:
-            await k.edit(response)
-            return
-        if "Your date is invalid" in response.text:
-            await k.edit("Format Wrong or invalid cc.")
-            return
-        res = response.text
-        text = f"{res.splitlines()[0]}\n"
-        text += f"{res.splitlines()[1]}\n"
-        text += f"{res.splitlines()[2]}\n"
-        text += f"{res.splitlines()[3]}\n"
-        text += f"{res.splitlines()[4]}\n"
-        text += f"{res.splitlines()[5]}\n"
-        text += f"{res.splitlines()[6]}\n"
-        text += f"Checked By **{fname}**"
-        await k.edit(text)
-
-
-@register(pattern="^/pp (.*)")
-async def alive(event):
-    if event.is_group and not await is_register_admin(event.input_chat,
-                                                      event.message.sender_id):
-        return
-    sender = await event.get_sender()
-    fname = sender.first_name
-    ok = event.pattern_match.group(1)
-    k = await event.reply("**Wait for Result.**")
-    async with ubot.conversation("@Carol5_bot") as bot_conv:
-        await bot_conv.send_message(f"/pp {ok}")
-        await asyncio.sleep(14)
-        response = await bot_conv.get_response()
-        if "Try again after" in response.text:
-            await k.edit(response)
-            return
-        if "Your date is invalid" in response.text:
-            await k.edit("Format Wrong or invalid cc.")
-            return
-        res = response.text
-        text = f"{res.splitlines()[0]}\n"
-        text += f"{res.splitlines()[1]}\n"
-        text += f"{res.splitlines()[2]}\n"
-        text += f"{res.splitlines()[3]}\n"
-        text += f"{res.splitlines()[4]}\n"
-        text += f"{res.splitlines()[5]}\n"
-        text += f"{res.splitlines()[6]}\n"
-        text += f"Checked By **{fname}**"
-        await k.edit(text)
-
-
-@register(pattern="^/ch (.*)")
-async def alive(event):
-    if event.is_group and not await is_register_admin(event.input_chat,
-                                                      event.message.sender_id):
-        return
-    sender = await event.get_sender()
-    fname = sender.first_name
-    ok = event.pattern_match.group(1)
-    async with ubot.conversation("@Carol5_bot") as bot_conv:
-        await bot_conv.send_message(f"/ch {ok}")
-        k = await event.reply("**Wait for Result.**")
-        await asyncio.sleep(18)
-        response = await bot_conv.get_response()
-        if "Try again after" in response.text:
-            await k.edit(response)
-            return
-        if "Your date is invalid" in response.text:
-            await k.edit("Format Wrong or invalid cc.")
-            return
-        res = response.text
-        text = f"{res.splitlines()[0]}\n"
-        text += f"{res.splitlines()[1]}\n"
-        text += f"{res.splitlines()[2]}\n"
-        text += f"{res.splitlines()[3]}\n"
-        text += f"{res.splitlines()[4]}\n"
-        text += f"{res.splitlines()[5]}\n"
-        text += f"{res.splitlines()[6]}\n"
-        text += f"Checked By **{fname}**"
-        await k.edit(text)
-
-
-@register(pattern="^/au (.*)")
-async def alive(event):
-    if event.is_group and not await is_register_admin(event.input_chat,
-                                                      event.message.sender_id):
-        return
-    sender = await event.get_sender()
-    fname = sender.first_name
-    ok = event.pattern_match.group(1)
-    async with ubot.conversation("@Carol5_bot") as bot_conv:
-        await bot_conv.send_message(f"/au {ok}")
-        k = await event.reply("**Wait for Result.**")
-        await asyncio.sleep(18)
-        response = await bot_conv.get_response()
-        if "Try again after" in response.text:
-            await event.reply(response)
-            return
-        if "Your date is invalid" in response.text:
-            await event.reply("Format Wrong or invalid cc.")
-            return
-        res = response.text
-        text = f"{res.splitlines()[0]}\n"
-        text += f"{res.splitlines()[1]}\n"
-        text += f"{res.splitlines()[2]}\n"
-        text += f"{res.splitlines()[3]}\n"
-        text += f"{res.splitlines()[4]}\n"
-        text += f"{res.splitlines()[5]}\n"
-        text += f"{res.splitlines()[6]}\n"
-        text += f"Checked By **{fname}**"
-        await k.edit(text)
-
-
-@register(pattern="^/bin (.*)")
-async def alive(event):
-    if event.is_group and not await is_register_admin(event.input_chat,
-                                                      event.message.sender_id):
-        return
-    sender = await event.get_sender()
-    fname = sender.first_name
-    k = await event.reply("**Wait for Result.**")
-    ok = event.pattern_match.group(1)
-    async with ubot.conversation("@Carol5_bot") as bot_conv:
-        await bot_conv.send_message(f"/bin {ok}")
-        await asyncio.sleep(5)
-        response = await bot_conv.get_response()
-        res = response.text
-        if "❌" in res:
-            text = "🤬❌ INVALID BIN ❌🤬\n"
-        else:
-            text = f"{res.splitlines()[0]}\n"
-            text += f"{res.splitlines()[1]}\n"
-            text += f"{res.splitlines()[2]}\n"
-            text += f"{res.splitlines()[3]}\n"
-            text += f"{res.splitlines()[4]}\n"
-            text += f"{res.splitlines()[5]}\n"
-            text += f"{res.splitlines()[6]}\n"
-
-        text += f"Checked By **{fname}**"
-        await k.edit(text)
+<b>❖ ʙɪɴ ᴄʜᴇᴄᴋᴇᴅ ʙʏ ➠ ʜᷟ ɪᷣ ᴍᷤ ᴧ η ɪ ᥫ᭡፝֟፝֟</b>""", reply_markup=InlineKeyboardMarkup(SACHIN),
+        )
+    except:
+        return await aux.edit(f"""
+๏ ʙɪɴ ɴᴏᴛ ʀᴇᴄᴏɢɴɪᴢᴇᴅ, ᴘʟᴇᴀsᴇ ᴇɴᴛᴇʀ ᴀ ᴠᴀʟɪᴅ ʙɪɴ.""")
