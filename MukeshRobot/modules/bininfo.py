@@ -1,21 +1,21 @@
-from ... import *
+from MukeshRobot import *
 from pyrogram import *
-from pyrogram.types import *
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
-from MukeshRobot import pbot
+from pyrogram.types import *
+from MukeshRobot import pbot as app 
 
-SACHIN = [
+EVAA = [
     [
-        InlineKeyboardButton(text="ᴀᴅᴅ ᴍᴇ ʙᴀʙʏ", url=f"https://t.me/HIMANSHI_MUSIC_BOT?startgroup=true"),
+        InlineKeyboardButton(text="• ʌᴅᴅ ϻ ʙʌʙʏ •️", url=f"https://t.me/HIMANSHI_MUSIC_BOT?startgroup=true"),
     ],
 ]
 
 
-@pbot.on_message(filters.command(["bin", "ccbin", "bininfo"], [".", "!", "/"]))
+@app.on_message(filters.command(["bin", "ccbin", "bininfo"], [".", "!", "/"]))
 async def check_ccbin(client, message):
     if len(message.command) < 2:
         return await message.reply_text(
-            "✦ <b>ᴘʟᴇᴀsᴇ ɢɪᴠᴇ ᴍᴇ ᴀ ʙɪɴ ᴛᴏ\n✦ ɢᴇᴛ ʙɪɴ ᴅᴇᴛᴀɪʟs !</b>"
+            "⬤ <b>ᴘʟᴇᴀsᴇ ɢɪᴠᴇ ᴍᴇ ᴀ ʙɪɴ ᴛᴏ ɢᴇᴛ ʙɪɴ ᴅᴇᴛᴀɪʟs !</b>"
         )
     try:
         await message.delete()
@@ -42,8 +42,21 @@ async def check_ccbin(client, message):
 <b>๏ ᴛʏᴘᴇ ➠</b> <tt>{resp.type}</tt>
 <b>๏ ᴠᴇɴᴅᴏʀ ➠</b> <tt>{resp.vendor}</tt>
 
-<b>❖ ʙɪɴ ᴄʜᴇᴄᴋᴇᴅ ʙʏ ➠ ʜᷟ ɪᷣ ᴍᷤ ᴧ η ɪ ᥫ᭡፝֟፝֟</b>""", reply_markup=InlineKeyboardMarkup(SACHIN),
+<b>❖ ʙɪɴ ᴄʜᴇᴄᴋᴇᴅ ʙʏ ➠ ʜᷟ ɪᷣ ᴍᷤ ᴧ η ɪ ᥫ᭡፝֟፝֟</b>""", reply_markup=InlineKeyboardMarkup(EVAA),
         )
     except:
         return await aux.edit(f"""
-๏ ʙɪɴ ɴᴏᴛ ʀᴇᴄᴏɢɴɪᴢᴇᴅ, ᴘʟᴇᴀsᴇ ᴇɴᴛᴇʀ ᴀ ᴠᴀʟɪᴅ ʙɪɴ.""")
+⬤ ʙɪɴ ɴᴏᴛ ʀᴇᴄᴏɢɴɪᴢᴇᴅ, ᴘʟᴇᴀsᴇ ᴇɴᴛᴇʀ ᴀ ᴠᴀʟɪᴅ ʙɪɴ.""")
+
+
+__help__ = """
+
+⬤ /gen ➥ ɢᴇɴʀᴀᴛᴇ ᴄʀᴇᴅɪᴛ ᴄᴀʀᴅs [● ᴇx ➣ /ɢᴇɴᴄᴄ 123456]
+⬤ /bininfo ➥ ʙɪɴ ᴅᴇᴛᴀɪʟs [● ᴇx ➣ /ʙɪɴɪɴғᴏ 123456]
+⬤ /fake ➥ ғᴀᴋᴇ ɪɴғᴏ ғᴏʀ ʙɪɴ [● ᴇx ➣ /ғᴀᴋᴇ ᴜs] 
+⬤ /genbin ➥ ɢᴇɴᴇʀᴀᴛᴇ ᴀ ʀᴀɴᴅᴏᴍ ᴠᴀʟɪᴅ ʙɪɴ.
+⬤ /rand ➥ ʙɪɴ ᴅᴀᴛᴀ.
+⬤ /fakegen ➥ ᴜsᴇʀ ғᴀᴋᴇ ɪɴғᴏʀᴍᴀᴛɪᴏɴ.
+"""
+
+__mod_name__ = "ᴄᴄ ʙɪɴ"
