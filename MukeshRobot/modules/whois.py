@@ -3,9 +3,14 @@ from datetime import datetime
 from pyrogram import filters
 from pyrogram.errors import PeerIdInvalid
 from pyrogram.types import Message, User
-
+from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from MukeshRobot import pbot
 
+EVAA = [
+    [
+        InlineKeyboardButton(text="ᴀᴅᴅ ᴍᴇ ʙᴀʙʏ", url=f"https://t.me/SAPNA_X_ROBOT?startgroup=true"),
+    ],
+]
 
 def ReplyCheck(message: Message):
     reply_id = None
@@ -20,13 +25,13 @@ def ReplyCheck(message: Message):
 
 
 infotext = (
-    "❀ [{full_name}](tg://user?id={user_id}) ❀\n\n"
-    "❍ ᴜsᴇʀ ɪᴅ ➛ `{user_id}`\n"
-    "❍ ғɪʀsᴛ ɴᴀᴍᴇ ➛ {first_name}\n"
-    "❍ ʟᴀsᴛ ɴᴀᴍᴇ ➛ {last_name}\n"
-    "❍ ᴜsᴇʀɴᴀᴍᴇ ➛ @{username}\n"
-    "❍ ʟᴀsᴛ sᴇᴇɴ ➛ {last_online}\n\n"
-    "❖ ᴘᴏᴡᴇʀᴇᴅ ʙʏ ➛ [ ‌●‌● 𝐒αρиα ‌●‌●](https://t.me/SAPNA_X_ROBOT)"
+    "❖ ᴜsᴇʀ sʜᴏʀᴛ ɪɴғᴏʀᴍᴀᴛɪᴏɴ ⏤͟͟͞͞★\n\n"
+    "● ᴜsᴇʀ ɪᴅ ➥ `{user_id}`\n"
+    "● ғɪʀsᴛ ɴᴀᴍᴇ ➥ `{first_name}`\n"
+    "● ʟᴀsᴛ ɴᴀᴍᴇ ➥ `{last_name}`\n"
+    "● ᴜsᴇʀɴᴀᴍᴇ ➥ `@{username}`\n"
+    "● ʟᴀsᴛ sᴇᴇɴ ➥ `{last_online}`\n\n"
+    "❖ ᴘᴏᴡᴇʀᴇᴅ ʙʏ ➠ [˹ sʌᴘηʌ ꭙ ʀσʙσᴛ ˼ ♪](https://t.me/SAPNA_X_ROBOT)"
 )
 
 
@@ -82,14 +87,14 @@ async def whois(client, message):
             last_name=user.last_name if user.last_name else "",
             username=user.username if user.username else "",
             last_online=LastOnline(user),
-            bio=desc if desc else "`ᴇᴍᴩᴛʏ.`",
-        ),
-        disable_web_page_preview=True,
+            bio=desc if desc else "`ᴇᴍᴩᴛʏ.`"), reply_markup=InlineKeyboardMarkup(EVAA), disable_web_page_preview=True,
     )
 
 
 __mod_name__ = "ᴡʜᴏɪs"
+
 __help__ = """
- ❍ /whois ➛ ᴜsᴇʀ sʜᴏʀᴛ ɪɴғᴏ.
+
+⬤ /whois ➥ ᴜsᴇʀ sʜᴏʀᴛ ɪɴғᴏ.
  """
- 
+

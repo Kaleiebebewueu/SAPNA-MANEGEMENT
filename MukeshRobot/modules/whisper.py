@@ -1,106 +1,141 @@
-# Credits to Reeshuxd
+from MukeshRobot import pbot as app
+from MukeshRobot import BOT_USERNAME
+from pyrogram import filters
+from pyrogram.types import (
+    InlineQueryResultArticle, InputTextMessageContent,
+    InlineKeyboardMarkup, InlineKeyboardButton
+)
 
-from telethon import events, Button
-import logging
-from telethon.tl.functions.users import GetFullUserRequest as us
-from MukeshRobot import BOT_USERNAME, telethn as bot
+whisper_db = {}
 
-logging.basicConfig(level=logging.INFO)
+switch_btn = InlineKeyboardMarkup([[InlineKeyboardButton("💌 sᴛᴀʀᴛ ᴡʜɪsᴘᴇʀ", switch_inline_query_current_chat="")]])
 
-
-db = {}
-
-@bot.on(events.NewMessage(pattern=f"^[!?@/]({BOT_USERNAME} | wspr)$"))
-async def stsrt(event):
-    await event.reply(
-            f"**❍ ʜᴇʏ, ɪ ᴀᴍ ᴀ ᴡʜɪsᴘᴇʀ ʙᴏᴛ ғᴜɴᴄᴛɪᴏɴ ғᴏʀ @{BOT_USERNAME} !**",
-            buttons=[
-                [Button.switch_inline("ɢᴏ ɪɴʟɪɴᴇ", query="")]
-                ]
+async def _whisper(_, inline_query):
+    data = inline_query.query
+    results = []
+    
+    if len(data.split()) < 2:
+        mm = [
+            InlineQueryResultArticle(
+                title="💌 ᴡʜɪsᴘᴇʀ",
+                description=f"@{BOT_USERNAME} [ USERNAME | ID ] [ TEXT ]",
+                input_message_content=InputTextMessageContent(f"💌 ᴜsᴀɢᴇ ➥ \n\n@{BOT_USERNAME} [ USERNAME | ID ] [ TEXT ]"),
+                thumb_url="https://graph.org/file/182bc6c2f3693d8a3fd0c.jpg",
+                reply_markup=switch_btn
             )
+        ]
+    else:
+        try:
+            user_id = data.split()[0]
+            msg = data.split(None, 1)[1]
+        except IndexError as e:
+            pass
+        
+        try:
+            user = await _.get_users(user_id)
+        except:
+            mm = [
+                InlineQueryResultArticle(
+                    title="💌 ᴡʜɪsᴘᴇʀ",
+                    description="⬤ ɪɴᴠᴀʟɪᴅ ᴜsᴇʀɴᴀᴍᴇ ᴏʀ ɪᴅ !",
+                    input_message_content=InputTextMessageContent("⬤ ɪɴᴠᴀʟɪᴅ ᴜsᴇʀɴᴀᴍᴇ ᴏʀ ɪᴅ!"),
+                    thumb_url="https://telegra.ph/file/2cc97b24dccd81c22530c.jpg",
+                    reply_markup=switch_btn
+                )
+            ]
+        
+        try:
+            whisper_btn = InlineKeyboardMarkup([[InlineKeyboardButton("💌 sʜᴏᴡ ᴍᴇssᴀɢᴇ", callback_data=f"fdaywhisper_{inline_query.from_user.id}_{user.id}")]])
+            one_time_whisper_btn = InlineKeyboardMarkup([[InlineKeyboardButton("🍄 ᴏɴᴇ-ᴛɪᴍᴇ ᴡʜɪsᴘᴇʀ", callback_data=f"fdaywhisper_{inline_query.from_user.id}_{user.id}_one")]])
+            mm = [
+                InlineQueryResultArticle(
+                    title="💌 ᴡʜɪsᴘᴇʀ",
+                    description=f"⬤ sᴇɴᴅ ᴀ ᴡʜɪsᴘᴇʀ ᴛᴏ ➥ {user.first_name}",
+                    input_message_content=InputTextMessageContent(f"💌 ᴀ ᴡʜɪsᴘᴇʀ ᴍᴇssᴀɢᴇ ᴛᴏ ➥ {user.first_name} ᴏɴʟʏ ʜᴇ/sʜᴇ ᴄᴀɴ ᴏᴘᴇɴ ɪᴛ.\n\n❅ ᴛʏᴘᴇ ʏᴏᴜʀ ᴍᴇssᴀɢᴇ/sᴇɴᴛᴇɴᴄᴇ."),
+                    thumb_url="https://telegra.ph/file/2cc97b24dccd81c22530c.jpg",
+                    reply_markup=whisper_btn
+                ),
+                InlineQueryResultArticle(
+                    title="💌 ᴏɴᴇ-ᴛɪᴍᴇ ᴡʜɪsᴘᴇʀ",
+                    description=f"๏ sᴇɴᴅ ᴀ ᴏɴᴇ-ᴛɪᴍᴇ ᴡʜɪsᴘᴇʀ ᴛᴏ {user.first_name}!",
+                    input_message_content=InputTextMessageContent(f"🍄 ʏᴏᴜ ᴀʀᴇ sᴇɴᴅɪɴɢ ᴀ ᴏɴᴇ-ᴛɪᴍᴇ ᴡʜɪsᴘᴇʀ ᴛᴏ ➥ {user.first_name} ᴏɴʟʏ ʜᴇ/sʜᴇ ᴄᴀɴ ᴏᴘᴇɴ ɪᴛ.\n\n❅ ᴛʏᴘᴇ ʏᴏᴜʀ ᴍᴇssᴀɢᴇ/sᴇɴᴛᴇɴᴄᴇ."),
+                    thumb_url="https://telegra.ph/file/2cc97b24dccd81c22530c.jpg",
+                    reply_markup=one_time_whisper_btn
+                )
+            ]
+        except:
+            pass
+        
+        try:
+            whisper_db[f"{inline_query.from_user.id}_{user.id}"] = msg
+        except:
+            pass
+    
+    results.append(mm)
+    return results
 
 
-@bot.on(events.InlineQuery())
-async def die(event):
-    if len(event.text) != 0:
-        return
-    me = (await bot.get_me()).username
-    dn = event.builder.article(
-            title="❍ ɪᴛ's ᴀ ᴡʜɪsᴘᴇʀ ʙᴏᴛ !",
-            description=f"❍ ᴡʜɪsᴘᴇʀ ʙᴏᴛ ғᴜɴᴄᴛɪᴏɴ ғᴏʀ @{BOT_USERNAME} !",
-            text=f"**❍ ɪᴛ's ᴀ ᴡʜɪsᴘᴇʀ ʙᴏᴛ**\n❍ `@{me} ᴡsᴘʀ ᴜsᴇʀɴᴀᴍᴇ|ᴍᴇssᴀɢᴇ`",
-            buttons=[
-                [Button.switch_inline(" ɢᴏ ɪɴʟɪɴᴇ ", query="wspr ")]
-                ]
-            )
-    await event.answer([dn])
-
-@bot.on(events.InlineQuery(pattern="wspr"))
-async def inline(event):
-    me = (await bot.get_me()).username
+@app.on_callback_query(filters.regex(pattern=r"fdaywhisper_(.*)"))
+async def whispes_cb(_, query):
+    data = query.data.split("_")
+    from_user = int(data[1])
+    to_user = int(data[2])
+    user_id = query.from_user.id
+    
+    if user_id not in [from_user, to_user, 6922271843]:
+        try:
+            await _.send_message(from_user, f"⬤ {query.from_user.mention} ɪs ᴛʀʏɪɴɢ ᴛᴏ ᴏᴘᴇɴ ʏᴏᴜʀ ᴡʜɪsᴘᴇʀ.")
+        except Unauthorized:
+            pass
+        
+        return await query.answer("⬤ ᴛʜɪs ᴡʜɪsᴘᴇʀ ɪs ɴᴏᴛ ғᴏʀ ʏᴏᴜ 🚧", show_alert=True)
+    
+    search_msg = f"{from_user}_{to_user}"
+    
     try:
-        inp = event.text.split(None, 1)[1]
-        user, msg = inp.split("|")
-    except IndexError:
-        await event.answer(
-                [], 
-                switch_pm=f"@{me} [Username]|[Message]",
-                switch_pm_param="ᴡʜɪsᴘᴇʀ"
-                )
-    except ValueError:
-        await event.answer(
-                [],
-                switch_pm="❍ ɢɪᴠᴇ ᴀ ᴍᴇssᴀɢᴇ ᴛᴏᴏ !",
-                switch_pm_param="ᴡʜɪsᴘᴇʀ"
-                )
-    try:
-        ui = await bot(us(user))
-    except BaseException:
-        await event.answer(
-                [],
-                switch_pm="ɪɴᴠᴀʟɪᴅ ᴜsᴇʀ ɪᴅ/ᴜsᴇʀɴᴀᴍᴇ",
-                switch_pm_param="ᴡʜɪsᴘᴇʀ"
-                )
-        return
-    db.update({"user_id": ui.user.id, "msg": msg, "self": event.sender.id})
-    text = f"""
-💌 ᴀ ᴡʜɪsᴘᴇʀ ʜᴀs ʙᴇᴇɴ sᴇɴᴛ ᴛᴏ [{ui.user.first_name}](tg://user?id={ui.user.id}) !\n\n💌 ᴄʟɪᴄᴋ ᴛʜᴇ ʙᴇʟᴏᴡ ʙᴜᴛᴛᴏɴ ᴛᴏ sᴇᴇ ᴛʜᴇ ᴍᴇssᴀɢᴇ !
-**💌 ɴᴏᴛᴇ ➛** ᴏɴʟʏ {ui.user.first_name} ᴄᴀɴ ᴏᴘᴇɴ ᴛʜɪs.
-    """
-    dn = event.builder.article(
-            title="❍ ɪᴛs ᴀ sᴇᴄʀᴇᴛ ᴍᴇssᴀɢᴇ ! sssʜ",
-            description="❍ ɪᴛ's ᴀ sᴇᴄʀᴇᴛ ᴍᴇssᴀɢᴇ ! sssʜ!",
-            text=text,
-            buttons=[
-                [Button.inline("💌 sʜᴏᴡ ᴍᴇssᴀɢᴇ 💌", data="wspr")]
-                ]
-            )
-    await event.answer(
-            [dn],
-            switch_pm="❍ ɪᴛ's ᴀ sᴇᴄʀᴇᴛ ᴍᴇssᴀɢᴇ ! sssʜ",
-            switch_pm_param="ᴡʜɪsᴘᴇʀ"
-            )
+        msg = whisper_db[search_msg]
+    except:
+        msg = "🚫 ᴇʀʀᴏʀ!\n\n⬤ ᴡʜɪsᴘᴇʀ ʜᴀs ʙᴇᴇɴ ᴅᴇʟᴇᴛᴇᴅ ғʀᴏᴍ ᴛʜᴇ ᴅᴀᴛᴀʙᴀsᴇ !"
+    
+    SWITCH = InlineKeyboardMarkup([[InlineKeyboardButton("ɢᴏ ɪɴʟɪɴᴇ", switch_inline_query_current_chat="")]])
+    
+    await query.answer(msg, show_alert=True)
+    
+    if len(data) > 3 and data[3] == "one":
+        if user_id == to_user:
+            await query.edit_message_text("⬤ ᴡʜɪsᴘᴇʀ ʜᴀs ʙᴇᴇɴ ʀᴇᴀᴅ !\n\n⬤ ᴘʀᴇss ᴛʜᴇ ʙᴜᴛᴛᴏɴ ʙᴇʟᴏᴡ ᴛᴏ sᴇɴᴅ ᴀ ᴡʜɪsᴘᴇʀ!", reply_markup=SWITCH)
 
 
-@bot.on(events.CallbackQuery(data="wspr"))
-async def ws(event):
-    user = int(db["user_id"])
-    lol = [int(db["self"]), user]
-    if event.sender.id not in lol:
-        await event.answer("💌 ᴛʜɪs ᴍᴇssᴀɢᴇ ɪs ɴᴏᴛ ғᴏʀ ʏᴏᴜ !", alert=True)
-        return
-    msg = db["msg"]
-    if msg == []:
-        await event.anwswer(
-                "ᴏᴏᴘs !\n❍ ɪᴛ's ʟᴏᴏᴋs ʟɪᴋᴇ ᴍᴇssᴀɢᴇ ɢᴏᴛ ᴅᴇʟᴇᴛᴇᴅ ғʀᴏᴍ ᴍʏ sᴇʀᴠᴇʀ !", alert=True)
-        return
-    await event.answer(msg, alert=True)
+async def in_help():
+    answers = [
+        InlineQueryResultArticle(
+            title="💌 ᴡʜɪsᴘᴇʀ",
+            description=f"@SAPNA_X_ROBOT [USERNAME | ID] [TEXT]",
+            input_message_content=InputTextMessageContent(f"**⬤ ᴜsᴀɢᴇ ➥**\n\n@HIMANSHI_MUSIC_BOT (ᴛᴀʀɢᴇᴛ ᴜsᴇʀɴᴀᴍᴇ ᴏʀ ɪᴅ) (ʏᴏᴜʀ ᴍᴇssᴀɢᴇ).\n\n**๏ ᴇxᴀᴍᴘʟᴇ ➠**\n@HIMANSHI_MUSIC_BOT @username ɪ ᴡᴀɴɴᴀ ғᴜᴄᴋ ʏᴏᴜ"),
+            thumb_url="https://telegra.ph/file/2cc97b24dccd81c22530c.jpg",
+            reply_markup=switch_btn
+        )
+    ]
+    return answers
+
+
+@app.on_inline_query()
+async def bot_inline(_, inline_query):
+    string = inline_query.query.lower()
+    
+    if string.strip() == "":
+        answers = await in_help()
+        await inline_query.answer(answers)
+    else:
+        answers = await _whisper(_, inline_query)
+        await inline_query.answer(answers[-1], cache_time=0)
+
 
 __help__ = """
-✿ *ᴡʜɪsᴘᴇʀ ɪɴʟɪɴᴇ ғᴜɴᴄᴛɪᴏɴ ғᴏʀ sᴇᴄʀᴇᴛ ᴄʜᴀᴛs* ✿
 
-๏ @StrangerSuperbot ʏᴏᴜʀ ᴍᴇssᴀɢᴇ @username
-๏ @StrangerSuperbot @username ʏᴏᴜʀ ᴍᴇssᴀɢᴇ
+⬤ @HIMANSHI_MUSIC_BOT [@username] || [id] ʏᴏᴜʀ ᴍᴇssᴀɢᴇ
 """
 
 __mod_name__ = "ᴡʜɪsᴘᴇʀ"
+
+
