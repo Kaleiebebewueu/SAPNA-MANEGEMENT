@@ -18,6 +18,21 @@ def dt():
     return dt_list
     
 
+AVISHA = [
+    [
+        InlineKeyboardButton(
+            text="• ʌᴅᴅ ϻɛ ɪɴ ʏσᴜʀ ɢʀσᴜᴘ •️",
+            url=f"https://t.me/SAPNA_X_ROBOT?startgroup=true",
+        ),
+    ],
+]
+def dt():
+    now = datetime.now()
+    dt_string = now.strftime("%d/%m/%Y %H:%M")
+    dt_list = dt_string.split(" ")
+    return dt_list
+    
+
 def dt_tom():
     a = (
         str(int(dt()[0].split("/")[0]) + 1)
@@ -35,11 +50,11 @@ today = str(dt()[0])
 async def ctest(_, message):
     cid = message.chat.id
     if message.chat.type == ChatType.PRIVATE:
-        return await message.reply_text("ᴛʜɪs ᴄᴏᴍᴍᴀɴᴅ ɪs ᴏɴʟʏ ғᴏʀ ɢʀᴏᴜᴘs.")
+        return await message.reply_text("⬤ ᴛʜɪs ᴄᴏᴍᴍᴀɴᴅ ɪs ᴏɴʟʏ ғᴏʀ ɢʀᴏᴜᴘs.")
     try:
      #  is_selected = await get_couple(cid, today)
      #  if not is_selected:
-         msg = await message.reply_text("ɢᴇɴᴇʀᴀᴛɪɴɢ ᴄᴏᴜᴘʟᴇs ɪᴍᴀɢᴇ ᴘʟᴇᴀsᴇ ᴡᴀɪᴛ...")
+         msg = await message.reply_text("🐾")
          #GET LIST OF USERS
          list_of_users = []
 
@@ -96,17 +111,15 @@ async def ctest(_, message):
          img.save(f'test_{cid}.png')
     
          TXT = f"""
-**ᴛᴏᴅᴀʏ's sᴇʟᴇᴄᴛᴇᴅ ᴄᴏᴜᴘʟᴇs 💓 :
+❖ ᴛᴏᴅᴀʏ's sᴇʟᴇᴄᴛᴇᴅ ᴄᴏᴜᴘʟᴇs ⏤͟͟͞͞★ 
 
-➖➖➖➖➖➖➖➖➖➖➖➖
-{N1} + {N2} = ❣️
-➖➖➖➖➖➖➖➖➖➖➖➖
+{N1} + {N2} = ♥️
 
-HAA MERI JAAN
-ɴᴇxᴛ ᴄᴏᴜᴘʟᴇs ᴡɪʟʟ ʙᴇ sᴇʟᴇᴄᴛᴇᴅ ᴏɴ {tomorrow} !!**
+❖ ɴᴇxᴛ ᴄᴏᴜᴘʟᴇs sᴇʟᴇᴄᴛᴇᴅ ᴏɴ `{tomorrow}`
 """
     
-         await message.reply_photo(f"test_{cid}.png", caption=TXT)
+         await message.reply_photo(f"test_{cid}.png", caption=TXT, reply_markup=InlineKeyboardMarkup(AVISHA),
+    )
          await msg.delete()
          a = upload_file(f"test_{cid}.png")
          for x in a:
@@ -122,3 +135,10 @@ HAA MERI JAAN
        pass
 
     
+__help__ = """
+
+ ⬤ /couples ➥ ᴄʜᴏᴏsᴇ 2 ᴜsᴇʀs ᴀɴᴅ sᴇɴᴅ ᴛʜᴇɪʀ ɴᴀᴍᴇ ᴀs ᴄᴏᴜᴘʟᴇs ɪɴ ʏᴏᴜʀ ᴄʜᴀᴛ.
+ ⬤ /lov <fristuser seconduser> ➥ sʜᴏᴡ ʟᴏᴠᴇ ᴘᴇʀᴄᴇɴᴛᴀɢᴇ.
+"""
+
+__mod_name__ = "ᴄᴏᴜᴘʟᴇ"
