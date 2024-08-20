@@ -25,7 +25,7 @@ async def handwrite(_, message: Message):
     await m.delete()
     await message.reply_photo(photo=write,caption=caption, reply_markup=InlineKeyboardMarkup(EVAA),)
 
-__mod_name__ = "ᴡʀɪᴛɪɴɢ"
+__mod_name__ = "ᴡʀɪᴛ"
 
 __help__ = """
 
