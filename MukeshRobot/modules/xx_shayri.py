@@ -16,4 +16,4 @@ async def hate_shayri(b,m):
     "dont remove this line \n credit  |n github : noob-mukesh"
     hate= requests.get("https://mukesh-api.vercel.app/hateshayri").json()["results"]    
     await m.reply_text(hate)          
-__mod_name__="sʜᴀʏʀɪ"
+__mod_name__="sʜᴀʏʀɪ-"
