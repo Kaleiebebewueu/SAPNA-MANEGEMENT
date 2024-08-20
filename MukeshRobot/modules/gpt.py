@@ -1,6 +1,6 @@
 import requests
 from MukeshRobot import telethn as tbot
-from MukeshRobotevents import register
+from MukeshRobot.events import register
 
 GPT_API_URL = "https://chatgpt.apinepdev.workers.dev"
 
