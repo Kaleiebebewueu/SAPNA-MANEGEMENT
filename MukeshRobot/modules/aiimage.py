@@ -27,7 +27,7 @@ async def imagine_(b, message: Message):
     photos.append(InputMediaPhoto(results[5], caption=caption))
     await b.send_media_group(message.chat.id, media=photos)
     
-__mod_name__ = "ᴀɪ-ɪᴍᴀɢᴇ"
+__mod_name__ = "ᴀɪ-ɪᴍɢ"
 __help__ = """
  ❍ /imagine ➛ ɢᴇɴᴇʀᴀᴛᴇ ᴀɪ ɪᴍᴀɢᴇ ғʀᴏᴍ ᴛᴇxᴛ
  ❍ /mahadev ➛ ɢᴇɴᴇʀᴀᴛᴇ Mᴀʜᴀᴅᴇᴠ ɪᴍᴀɢᴇ
