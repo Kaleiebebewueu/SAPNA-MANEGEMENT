@@ -404,7 +404,7 @@ async def chat_watcher_func(_, message):
         except:
             return
 
-__mod_name__ = "ᴀғᴋ"
+__mod_name__ = "Aғᴋ"
 
 __help__ = """
 
