@@ -1,18 +1,27 @@
 import os
-import random
-from unidecode import unidecode
 from PIL import ImageDraw, Image, ImageFont, ImageChops
 from pyrogram import *
 from pyrogram.types import *
 from logging import getLogger
-
 from MukeshRobot import pbot as app
 
-from MukeshRobot.database.wel_db import *
-
-COMMAND_HANDLER = ". /".split() # COMMAND HANDLER
-
 LOGGER = getLogger(__name__)
+
+class WelDatabase:
+    def __init__(self):
+        self.data = {}
+
+    async def find_one(self, chat_id):
+        return chat_id in self.data
+
+    async def add_wlcm(self, chat_id):
+        self.data[chat_id] = {}
+
+    async def rm_wlcm(self, chat_id):
+        if chat_id in self.data:
+            del self.data[chat_id]
+
+wlcm = WelDatabase()
 
 class temp:
     ME = None
@@ -23,78 +32,40 @@ class temp:
     B_NAME = None
 
 def circle(pfp, size=(450, 450)):
-    pfp = pfp.resize(size, Image.ANTIALIAS).convert("RGBA")
+    pfp = pfp.resize(size, Image.LANCZOS).convert("RGBA")
     bigsize = (pfp.size[0] * 3, pfp.size[1] * 3)
     mask = Image.new("L", bigsize, 0)
     draw = ImageDraw.Draw(mask)
     draw.ellipse((0, 0) + bigsize, fill=255)
-    mask = mask.resize(pfp.size, Image.ANTIALIAS)
+    mask = mask.resize(pfp.size, Image.LANCZOS)
     mask = ImageChops.darker(mask, pfp.split()[-1])
     pfp.putalpha(mask)
     return pfp
 
-def welcomepic(pic, user, chat, id, uname):
+
+def welcomepic(pic, user, chatname, id, uname):
     background = Image.open("MukeshRobot/resources/bg.jpg")
     pfp = Image.open(pic).convert("RGBA")
     pfp = circle(pfp)
-    pfp = pfp.resize(
-        (450, 450)
-    ) 
+    pfp = pfp.resize((450, 450))
     draw = ImageDraw.Draw(background)
-    font = ImageFont.truetype('MukeshRobot/resources/SwanseaBold-D0ox.ttf', size=44)
-    welcome_font = ImageFont.truetype('MukeshRobot/resources/SwanseaBold-D0ox.ttf', size=90)
-    draw.text((65, 250), f'NAME : {unidecode(user)}', fill=(255, 255, 255), font=font)
-    draw.text((65, 340), f'ID : {id}', fill=(255, 255, 255), font=font)
-    draw.text((65,430), f"USERNAME : {uname}", fill=(255,255,255),font=font)
-    pfp_position = (767, 133)  
-    background.paste(pfp, pfp_position, pfp)  
-    background.save(
-        f"downloads/welcome#{id}.png"
-    )
+    font = ImageFont.truetype('MukeshRobot/resources/SwanseaBold-D0ox.ttf', size=40)
+    welcome_font = ImageFont.truetype('MukeshRobot/resources/SwanseaBold-D0ox.ttf', size=60)
+    draw.text((30, 300), f'NAME: {user}', fill=(255, 255, 255), font=font)
+    draw.text((30, 370), f'ID: {id}', fill=(255, 255, 255), font=font)
+    draw.text((30, 430), f"USERNAME : {uname}", fill=(255, 255, 255), font=font)
+    pfp_position = (770, 140)
+    background.paste(pfp, pfp_position, pfp)
+    background.save(f"downloads/welcome#{id}.png")
     return f"downloads/welcome#{id}.png"
-
-    
-@app.on_message(filters.command("welcome", COMMAND_HANDLER) & ~filters.private)
-async def auto_state(_, message):
-    usage = "**❅ ᴜsᴀɢᴇ ➥ **/welcome [ᴇɴᴀʙʟᴇ|ᴅɪsᴀʙʟᴇ]"
-    if len(message.command) == 1:
-        return await message.reply_text(usage)
-    chat_id = message.chat.id
-    user = await app.get_chat_member(message.chat.id, message.from_user.id)
-    if user.status in (
-        enums.ChatMemberStatus.ADMINISTRATOR,
-        enums.ChatMemberStatus.OWNER,
-    ):
-      A = await wlcm.find_one({"chat_id" : chat_id})
-      state = message.text.split(None, 1)[1].strip()
-      state = state.lower()
-      if state == "enable":
-        if A:
-           return await message.reply_text("๏ sᴘᴇᴄɪᴀʟ ᴡᴇʟᴄᴏᴍᴇ ᴀʟʀᴇᴀᴅʏ ᴇɴᴀʙʟᴇᴅ")
-        elif not A:
-           await add_wlcm(chat_id)
-           await message.reply_text(f"๏ ᴇɴᴀʙʟᴇᴅ sᴘᴇᴄɪᴀʟ ᴡᴇʟᴄᴏᴍᴇ ɪɴ ➥ {message.chat.title}")
-      elif state == "disable":
-        if not A:
-           return await message.reply_text("๏ sᴘᴇᴄɪᴀʟ ᴡᴇʟᴄᴏᴍᴇ ᴀʟʀᴇᴀᴅʏ ᴅɪsᴀʙʟᴇᴅ")
-        elif A:
-           await rm_wlcm(chat_id)
-           await message.reply_text(f"๏ ᴅɪsᴀʙʟᴇᴅ sᴘᴇᴄɪᴀʟ ᴡᴇʟᴄᴏᴍᴇ ɪɴ ➥ {message.chat.title}")
-      else:
-        await message.reply_text(usage)
-    else:
-        await message.reply("๏ ᴏɴʟʏ ᴀᴅᴍɪɴs ᴄᴀɴ ᴜsᴇ ᴛʜɪs ᴄᴏᴍᴍᴀɴᴅ")
-
 
 @app.on_chat_member_updated(filters.group, group=-3)
 async def greet_group(_, member: ChatMemberUpdated):
     chat_id = member.chat.id
-    #A = await wlcm.find_one({"chat_id" : chat_id})
-    #if not A:
-      # return
+    A = await wlcm.find_one(chat_id)
     if (
         not member.new_chat_member
-        or member.new_chat_member.status in {"restricted"}
+        or member.new_chat_member.status in {"banned", "left", "restricted"}
         or member.old_chat_member
     ):
         return
@@ -104,7 +75,7 @@ async def greet_group(_, member: ChatMemberUpdated):
             user.photo.big_file_id, file_name=f"pp{user.id}.png"
         )
     except AttributeError:
-        pic = "HuTao/resources/profilepic.jpg"
+        pic = "MukeshRobot/resources/bg.jpg"
     if (temp.MELCOW).get(f"welcome-{member.chat.id}") is not None:
         try:
             await temp.MELCOW[f"welcome-{member.chat.id}"].delete()
@@ -117,11 +88,10 @@ async def greet_group(_, member: ChatMemberUpdated):
         temp.MELCOW[f"welcome-{member.chat.id}"] = await app.send_photo(
             member.chat.id,
             photo=welcomeimg,
-            caption= f"""
+            caption=f"""
 **ㅤ ◦•●◉✿ ᴡᴇʟᴄᴏᴍᴇ ʙᴀʙʏ ✿◉●•◦
 ▬▭▬▭▬▭▬▭▬▭▬▭▬▭▬
 
-● ɢʀᴏᴜᴘ ➥ {member.chat.title}
 ● ɴᴀᴍᴇ ➥ {user.mention}
 ● ᴜsᴇʀ ɪᴅ ➥ {user.id}
 ● ᴜsᴇʀɴᴀᴍᴇ ➥ @{user.username}
@@ -129,16 +99,25 @@ async def greet_group(_, member: ChatMemberUpdated):
 ❖ ᴘᴏᴡᴇʀᴇᴅ ʙʏ ➠ [sʌᴘηʌ፝֟፝֟](https://t.me/SAPNA_X_ROBOT)
 ▬▭▬▭▬▭▬▭▬▭▬▭▬▭▬**
 """,
-            reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton (f"• ᴠɪᴇᴡ ᴜsᴇʀ •", url=f"https://t.me/{user.username}")]])
-
-            )
+            reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(f"⦿ ᴠɪᴇᴡ ᴜsᴇʀ ⦿", url=f"https://t.me/{user.username}")]])
+        )
     except Exception as e:
         LOGGER.error(e)
     try:
         os.remove(f"downloads/welcome#{user.id}.png")
         os.remove(f"downloads/pp{user.id}.png")
     except Exception as e:
-        return 
+        pass
 
-
-#####
+@app.on_message(filters.new_chat_members & filters.group, group=-1)
+async def bot_wel(_, message):
+    for u in message.new_chat_members:
+        if u.id == app.me.id:
+            await app.send_message(LOG_CHANNEL_ID, f"""
+NEW GROUP
+➖➖➖➖➖➖➖➖➖➖➖➖
+NAME: {message.chat.title}
+ID: {message.chat.id}
+USERNAME: @{message.chat.username}
+➖➖➖➖➖➖➖➖➖➖➖➖
+""")
